@@ -3,7 +3,6 @@ from django_mysql.models import JSONField
 import uuid
 
 from authentication.models import User
-from address.models import Address
 
 # -------------- MY JOBS --------------
 

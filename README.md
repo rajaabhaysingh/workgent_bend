@@ -24,4 +24,4 @@ Working directory for workgent backend
 
 # API for ASSIGNMENT available on:
 
-http://localhost:8000/jobs/
+http://localhost:8000/assignment/

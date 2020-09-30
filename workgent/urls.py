@@ -25,7 +25,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
    openapi.Info(
       title="WORKGENT",
-      default_version='v1',
+      default_version='dev_1.0',
       description="Test description",
       terms_of_service="https://www.workgent.ml/policies/terms/",
       contact=openapi.Contact(email="contact@workgent.ml"),
