@@ -44,7 +44,7 @@ class RegisterView(generics.GenericAPIView):
         email_body = 'Hi ' + user.username + ', \n\nnPlease click the link below to verify your email-id \n\n' + absurl + '\n\nYou are receiving this email because, you signed up at workgent.ml\n\n--\nTeam workgent\nwww.workgent.ml'
         data = {'email_body': email_body, 'email_to': user.email, 'email_subject': 'Verify your email - Workgent'}
 
-        Util.send_email(data)
+        # Util.send_email(data)
 
         return Response(user_data, status=status.HTTP_201_CREATED)
 
@@ -113,6 +113,8 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 
 # PasswordTokenCheckAPIView
 class PasswordTokenCheckAPIView(generics.GenericAPIView):
+
+    
 
     def get(self, request, uidb64, token):
         try:

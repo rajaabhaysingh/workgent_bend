@@ -20,8 +20,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         email = attrs.get('email', '')
         username = attrs.get('username', '')
 
-        if not username.isalnum():
-            raise serializers.ValidationError('Username should only contain alphanumeric characters.')
+        # if not username.isalnum():
+        #     raise serializers.ValidationError('Username should only contain alphanumeric characters.')
 
         return attrs
 
@@ -40,20 +40,20 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
 # LoginSerializer
 class LoginSerializer(serializers.ModelSerializer):
 
-    email = serializers.EmailField(max_length=255, min_length=3)
+    # email = serializers.EmailField(max_length=255, min_length=3, write_only=True)
     password = serializers.CharField(max_length=255, min_length=1, write_only=True)
-    username = serializers.CharField(max_length=255, min_length=1, read_only=True)
+    username = serializers.CharField(max_length=255, min_length=1)
     tokens = serializers.CharField(max_length=1024, min_length=1, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'password', 'tokens', 'picture']
+        fields = ['id', 'username', 'password', 'tokens', 'picture']
 
     def validate(self, attrs):
-        email = attrs.get('email', '')
+        username = attrs.get('username', '')
         password = attrs.get('password', '')
 
-        user = auth.authenticate(email =  email, password = password)
+        user = auth.authenticate(username =  username, password = password)
 
         if not user:
             raise AuthenticationFailed('Inavlid credentials.')
@@ -61,12 +61,12 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.is_active:
             raise AuthenticationFailed('Account disabled. Contact us for further help.')
 
-        if not user.is_verified:
-            raise AuthenticationFailed('Email is not verified.')
+        # if not user.is_verified:
+        #     raise AuthenticationFailed('Email is not verified.')
 
         return {
             'id': user.id,
-            'email': user.email,
+            # 'email': user.email,
             'username': user.username,
             'tokens': user.tokens,
             'picture': user.picture

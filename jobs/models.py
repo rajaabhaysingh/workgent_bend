@@ -34,7 +34,7 @@ class Job(models.Model):
     job_name = models.CharField(max_length=64)
     job_owner = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='job_owner')
     job_desc = models.TextField(null=True, blank=True)
-    job_details = JSONField(null=True, blank=True)
+    job_details = models.TextField(null=True, blank=True)
     job_img = models.ImageField(upload_to='jobs/%Y/%m/', max_length=1024, null=True, blank=True)
     job_duration = models.DecimalField(max_digits=10, decimal_places=2)
     is_permanent = models.BooleanField(default=False)

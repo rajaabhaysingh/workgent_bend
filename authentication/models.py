@@ -43,19 +43,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
     
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
+            "refresh": str(refresh),
+            "access": str(refresh.access_token)
         }
 
         

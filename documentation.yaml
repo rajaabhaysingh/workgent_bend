@@ -1,0 +1,708 @@
+swagger: "2.0"
+info:
+  title: WORKGENT
+  description: Test description
+  termsOfService: "https://www.workgent.ml/policies/terms/"
+  contact:
+    email: contact@workgent.ml
+  license:
+    name: Test License
+  version: dev_1.0
+host: "localhost:8000"
+schemes:
+  - http
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Bearer: []
+paths:
+  /address/my/:
+    get:
+      operationId: address_my_list
+      description: ""
+      parameters:
+        - name: page
+          in: query
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      responses:
+        "200":
+          description: ""
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Address"
+      tags:
+        - address
+    post:
+      operationId: address_my_create
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Address"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/Address"
+      tags:
+        - address
+    parameters: []
+  "/address/my/{id}/":
+    get:
+      operationId: address_my_read
+      description: ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Address"
+      tags:
+        - address
+    put:
+      operationId: address_my_update
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Address"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Address"
+      tags:
+        - address
+    patch:
+      operationId: address_my_partial_update
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Address"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Address"
+      tags:
+        - address
+    delete:
+      operationId: address_my_delete
+      description: ""
+      parameters: []
+      responses:
+        "204":
+          description: ""
+      tags:
+        - address
+    parameters:
+      - name: id
+        in: path
+        description: A UUID string identifying this address.
+        required: true
+        type: string
+        format: uuid
+  /auth/email-verify/:
+    get:
+      operationId: auth_email-verify_list
+      description: ""
+      parameters:
+        - name: token
+          in: query
+          description: Email verification token
+          type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - auth
+    parameters: []
+  /auth/login/:
+    post:
+      operationId: auth_login_create
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Login"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/Login"
+      tags:
+        - auth
+    parameters: []
+  /auth/register/:
+    post:
+      operationId: auth_register_create
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Register"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/Register"
+      tags:
+        - auth
+    parameters: []
+  /auth/request-reset-password-email/:
+    post:
+      operationId: auth_request-reset-password-email_create
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/RequestPasswordResetEmail"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/RequestPasswordResetEmail"
+      tags:
+        - auth
+    parameters: []
+  /auth/reset-password-final:
+    patch:
+      operationId: auth_reset-password-final_partial_update
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/SetNewPassword"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/SetNewPassword"
+      tags:
+        - auth
+    parameters: []
+  "/auth/reset-password/{uidb64}/{token}/":
+    get:
+      operationId: auth_reset-password_read
+      description: ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - auth
+    parameters:
+      - name: token
+        in: path
+        required: true
+        type: string
+      - name: uidb64
+        in: path
+        required: true
+        type: string
+  /auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TokenRefresh"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/TokenRefresh"
+      tags:
+        - auth
+    parameters: []
+  /jobs/:
+    get:
+      operationId: jobs_list
+      description: ""
+      parameters:
+        - name: page
+          in: query
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      responses:
+        "200":
+          description: ""
+      tags:
+        - jobs
+    parameters: []
+  /jobs/my/:
+    get:
+      operationId: jobs_my_list
+      description: ""
+      parameters:
+        - name: page
+          in: query
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      responses:
+        "200":
+          description: ""
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: "#/definitions/Job"
+      tags:
+        - jobs
+    post:
+      operationId: jobs_my_create
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Job"
+      responses:
+        "201":
+          description: ""
+          schema:
+            $ref: "#/definitions/Job"
+      tags:
+        - jobs
+    parameters: []
+  "/jobs/my/{id}/":
+    get:
+      operationId: jobs_my_read
+      description: ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Job"
+      tags:
+        - jobs
+    put:
+      operationId: jobs_my_update
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Job"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Job"
+      tags:
+        - jobs
+    patch:
+      operationId: jobs_my_partial_update
+      description: ""
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Job"
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: "#/definitions/Job"
+      tags:
+        - jobs
+    delete:
+      operationId: jobs_my_delete
+      description: ""
+      parameters: []
+      responses:
+        "204":
+          description: ""
+      tags:
+        - jobs
+    parameters:
+      - name: id
+        in: path
+        description: A UUID string identifying this job.
+        required: true
+        type: string
+        format: uuid
+  "/jobs/{id}/":
+    get:
+      operationId: jobs_read
+      description: ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - jobs
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  /stats/my/:
+    get:
+      operationId: stats_my_list
+      description: ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - stats
+    parameters: []
+definitions:
+  Address:
+    required:
+      - add_line
+      - country
+      - div_1_state
+      - div_2_dist
+      - zip
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      add_line:
+        title: Add line
+        type: string
+        maxLength: 1024
+        minLength: 1
+      country:
+        title: Country
+        type: string
+        enum:
+          - INDIA
+      div_1_state:
+        title: Div 1 state
+        type: string
+        maxLength: 64
+        minLength: 1
+      div_2_dist:
+        title: Div 2 dist
+        type: string
+        maxLength: 64
+        minLength: 1
+      div_3_subdist:
+        title: Div 3 subdist
+        type: string
+        maxLength: 64
+        x-nullable: true
+      div_4_vill_colony:
+        title: Div 4 vill colony
+        type: string
+        maxLength: 64
+        x-nullable: true
+      zip:
+        title: Zip
+        type: integer
+        maximum: 4294967295
+        minimum: 0
+      lat:
+        title: Lat
+        type: string
+        format: decimal
+        x-nullable: true
+      long:
+        title: Long
+        type: string
+        format: decimal
+        x-nullable: true
+  Login:
+    required:
+      - email
+      - password
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 255
+        minLength: 3
+      username:
+        title: Username
+        type: string
+        readOnly: true
+        maxLength: 255
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 255
+        minLength: 1
+      tokens:
+        title: Tokens
+        type: string
+        readOnly: true
+        maxLength: 1024
+        minLength: 1
+      picture:
+        title: Picture
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  Register:
+    required:
+      - email
+      - username
+      - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 255
+        minLength: 1
+      username:
+        title: Username
+        type: string
+        maxLength: 255
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 68
+        minLength: 8
+      picture:
+        title: Picture
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  RequestPasswordResetEmail:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 255
+        minLength: 3
+  SetNewPassword:
+    required:
+      - password
+      - token
+      - uidb64
+    type: object
+    properties:
+      password:
+        title: Password
+        type: string
+        maxLength: 68
+        minLength: 8
+      token:
+        title: Token
+        type: string
+        maxLength: 1024
+        minLength: 1
+      uidb64:
+        title: Uidb64
+        type: string
+        maxLength: 1024
+        minLength: 1
+  TokenRefresh:
+    required:
+      - refresh
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+  Job:
+    required:
+      - job_type
+      - job_name
+      - job_duration
+      - req_qty
+      - add_line
+      - zip
+    type: object
+    properties:
+      id:
+        title: Id
+        type: string
+        format: uuid
+        readOnly: true
+      job_type:
+        title: Job type
+        type: string
+        enum:
+          - NORMAL
+          - BULK
+          - EVENT
+          - OTHER
+      job_name:
+        title: Job name
+        type: string
+        maxLength: 64
+        minLength: 1
+      job_img:
+        title: Job img
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      job_desc:
+        title: Job desc
+        type: string
+        x-nullable: true
+      job_details:
+        title: Job details
+        type: string
+        x-nullable: true
+      job_duration:
+        title: Job duration
+        type: string
+        format: decimal
+      is_permanent:
+        title: Is permanent
+        type: boolean
+      req_qty:
+        title: Req qty
+        type: integer
+        maximum: 4294967295
+        minimum: 0
+      pay_amt:
+        title: Pay amt
+        type: string
+        format: decimal
+        x-nullable: true
+      pay_amt_unit:
+        title: Pay amt unit
+        type: string
+        enum:
+          - Minute
+          - Hour
+          - Day
+          - Month
+          - Year
+          - TASK
+        x-nullable: true
+      is_negotiable:
+        title: Is negotiable
+        type: boolean
+      add_line:
+        title: Add line
+        type: string
+        maxLength: 1024
+        minLength: 1
+      country:
+        title: Country
+        type: string
+        enum:
+          - INDIA
+        x-nullable: true
+      div_1_state:
+        title: Div 1 state
+        type: string
+        maxLength: 64
+        x-nullable: true
+      div_2_dist:
+        title: Div 2 dist
+        type: string
+        maxLength: 64
+        x-nullable: true
+      div_3_subdist:
+        title: Div 3 subdist
+        type: string
+        maxLength: 64
+        x-nullable: true
+      div_4_vill_colony:
+        title: Div 4 vill colony
+        type: string
+        maxLength: 64
+        x-nullable: true
+      zip:
+        title: Zip
+        type: integer
+        maximum: 4294967295
+        minimum: 0
+      lat:
+        title: Lat
+        type: string
+        format: decimal
+        x-nullable: true
+      long:
+        title: Long
+        type: string
+        format: decimal
+        x-nullable: true
